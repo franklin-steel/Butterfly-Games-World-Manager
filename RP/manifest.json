@@ -1,0 +1,23 @@
+{
+  "format_version": 3,
+  "header": {
+    "name": "pack.name",
+    "description": "pack.description",
+    "uuid": "e5b7fbb0-9279-4b4c-8711-af1eefc0b01f",
+    "version": "1.0.0",
+    "min_engine_version": "1.26.50",
+    "pack_scope": "any"
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "bb32277b-be79-456f-8342-c001b89b054e",
+      "version": "1.0.0"
+    }
+  ],
+  "metadata": {
+    "authors": ["Franklin Custódio de Sousa"],
+    "product_type": "addon"
+  },
+  "capabilities": ["pbr"]
+}
