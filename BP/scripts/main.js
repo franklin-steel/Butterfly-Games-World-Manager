@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { world, system, WeatherType } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 
 world.beforeEvents.itemUse.subscribe(eventData => {
@@ -14,6 +14,7 @@ world.beforeEvents.itemUse.subscribe(eventData => {
         .label("Execution commands")
         .button(`Kill All Mobs\n§9The player will be ignored.`)
         .button(`Remove Drops\n§cRemove all items dropped.`)
+        .button(`Clear Weather\n§bClear all weather conditions`)
         .divider()
         .label("Tools")
         .button(`Pause Mob\n§2Makes the mob not move.`)
@@ -50,6 +51,12 @@ world.beforeEvents.itemUse.subscribe(eventData => {
                     world.gameRules.doDayLightCycle = !stopDayCycle;
                     world.gameRules.doMobSpawning = !doMobSpawning;
                 });
+            } else if (response.selection === 1) {
+                source.runCommand("kill @e[type=!player,type=!item]");
+            } else if (response.selection === 2) {
+                source.runCommand("kill @e[type=item]");
+            } else if (response.selection === 3) {
+                source.dimension.setWeather(WeatherType.Clear);
             }
         });
     });
