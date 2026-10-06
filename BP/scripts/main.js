@@ -13,11 +13,11 @@ world.beforeEvents.itemUse.subscribe(eventData => {
         .divider()
         .label("Execution commands")
         .button(`Kill All Mobs\n§9The player will be ignored.`)
-        .button(`Remove Drops\n§cRemove all itens droped.`)
+        .button(`Remove Drops\n§cRemove all items dropped.`)
         .divider()
         .label("Tools")
         .button(`Pause Mob\n§2Makes the mob not move.`)
-        .button(`Rotation Mob\n§6Rotate the mob freely..`);
+        .button(`Rotation Mob\n§6Rotate the mob freely.`);
 
     const modalForm = new ModalFormData();
 
