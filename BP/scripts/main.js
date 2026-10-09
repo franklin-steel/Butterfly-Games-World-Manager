@@ -1,8 +1,11 @@
-import { world, system, WeatherType, TimeOfDay } from "@minecraft/server";
+import { world, system, WeatherType, TimeOfDay, ItemStack } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import "./events/pause_mob";
 
 world.beforeEvents.itemUse.subscribe(eventData => {
     const { source, itemStack } = eventData;
+
+    if (itemStack?.typeId !== "btygames:world_manager") return;
 
     const currentDayCycle = world.gameRules.doDayLightCycle;
     const currentDoMobSpawning = world.gameRules.doMobSpawning;
@@ -13,13 +16,13 @@ world.beforeEvents.itemUse.subscribe(eventData => {
         .button("World Settings")
         .divider()
         .label("Execution commands")
-        .button(`Kill All Mobs\n§9The player will be ignored.`)
-        .button(`Remove Drops\n§cRemove all items dropped.`)
-        .button(`Clear Weather\n§bClear all weather conditions`)
+        .button(`Kill All Mobs`, "textures/icons/kill_all_mobs_icon.png")
+        .button(`Remove Drops`, "textures/icons/remove_drops_icon.png")
+        .button(`Clear Weather`, "textures/icons/clear_weather_icon.png")
         .divider()
         .label("Tools")
-        .button(`Pause Mob\n§2Makes the mob not move.`)
-        .button(`Rotation Mob\n§6Rotate the mob freely.`);
+        .button(`Pause Mob`, "textures/icons/pause_mob_icon.png")
+        .button(`Rotate Mob`, "textures/icons/rotate_mob_icon.png");
 
     const modalForm = new ModalFormData();
     modalForm.title(`World Settings `);
@@ -49,7 +52,7 @@ world.beforeEvents.itemUse.subscribe(eventData => {
 
     // setTimeOfDay
     modalForm.dropdown(
-        "Avaliable times",
+        "Available times",
         timeOfDayList.map(time => time.name),
         { defaultValueIndex: getTimeIndex(world.getTimeOfDay()) }
     );
@@ -94,10 +97,27 @@ world.beforeEvents.itemUse.subscribe(eventData => {
                 });
             } else if (response.selection === 1) {
                 source.runCommand("kill @e[type=!player,type=!item]");
+                source.onScreenDisplay.setActionBar(`§aAll mobs have been killed.`);
+                source.playSound("note.pling");
             } else if (response.selection === 2) {
                 source.runCommand("kill @e[type=item]");
+                source.onScreenDisplay.setActionBar(`§aAll items have been killed.`);
+                source.playSound("note.pling");
             } else if (response.selection === 3) {
                 source.dimension.setWeather(WeatherType.Clear);
+                source.onScreenDisplay.setActionBar(`§aThe weather has been cleared.`);
+                source.playSound("note.pling");
+            } else if (response.selection === 4) {
+                const sourceInventory = source.getComponent("minecraft:inventory").container;
+                const sourceEmptySlots = sourceInventory.emptySlotsCount;
+                if (sourceEmptySlots === 0) {
+                    source.onScreenDisplay.setActionBar(`§cYour inventory is full.`);
+                    source.playSound("note.bass");
+                    return;
+                }
+
+                const item = new ItemStack("btygames:pause_mob", 1);
+                sourceInventory.addItem(item);
             }
         });
     });

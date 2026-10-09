@@ -1,0 +1,10 @@
+{
+	"texture_data": {
+		"pause_mob": {
+			"textures": "textures/items/pause_mob.png"
+		},
+		"world_manager": {
+			"textures": "textures/items/world_manager.png"
+		}
+	}
+}

@@ -1,2 +1,4 @@
 pack.name=World Manager RP
 pack.description=A system for defining settings and facilitating content creation
+item.btygames:world_manager=§dWorld Manager\n§r§9By Butterfly Games
+item.btygames:pause_mob=Pause Mob\n§9Interact to pause/unpause mob.

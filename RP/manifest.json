@@ -17,7 +17,10 @@
   ],
   "metadata": {
     "authors": ["Franklin Custódio de Sousa"],
-    "product_type": "addon"
+    "product_type": "addon",
+    "generated_with": {
+      "blockbench_item_wizard": ["1.2.4"]
+    }
   },
   "capabilities": ["pbr"]
 }
